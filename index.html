@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Generate PDF</title>
+</head>
+<body>
+  <h2>Enter Your Details</h2>
+  <form id="user-form">
+    <label for="name">Name:</label>
+    <input type="text" id="name" required><br><br>
+
+    <label for="age">Age:</label>
+    <input type="number" id="age" required><br><br>
+
+    <label for="phno">Phone Number:</label>
+    <input type="tel" id="phno" pattern="[0-9]{10}" required><br><br>
+
+    <button type="button" onclick="generatePDF()">Download PDF</button>
+  </form>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+  <script>
+    function generatePDF() {
+      // Get input values
+      const name = document.getElementById('name').value;
+      const age = document.getElementById('age').value;
+      const phno = document.getElementById('phno').value;
+
+      // Validate the input
+      if (name === "" || age === "" || phno === "") {
+        alert("Please fill all the fields.");
+        return;
+      }
+
+      // Create a new jsPDF instance
+      const { jsPDF } = window.jspdf;
+      const doc = new jsPDF();
+
+      // Add content to the PDF
+      doc.text(`Name: ${name}`, 10, 10);
+      doc.text(`Age: ${age}`, 10, 20);
+      doc.text(`Phone Number: ${phno}`, 10, 30);
+
+      // Save the PDF
+      doc.save('user-details.pdf');
+    }
+  </script>
+</body>
+</html>
